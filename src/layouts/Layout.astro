@@ -35,5 +35,12 @@ const { lang, title, description } = Astro.props;
   </head>
   <body class="grain font-body antialiased">
     <slot />
+    <script>
+      import Lenis from "lenis";
+
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        new Lenis({ autoRaf: true, anchors: true });
+      }
+    </script>
   </body>
 </html>

@@ -16,7 +16,11 @@ const links = [
 ];
 ---
 
-<header class="fixed inset-x-0 top-0 z-50 border-b border-ink/10 bg-cream/80 backdrop-blur-md">
+<header
+  data-header
+  data-scrolled="false"
+  class="fixed inset-x-0 top-0 z-50 border-b border-transparent transition-colors duration-500 data-[scrolled=true]:border-ink/10 data-[scrolled=true]:bg-cream/85 data-[scrolled=true]:backdrop-blur-md"
+>
   <nav class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
     <a href="#top" class="font-display text-2xl font-bold tracking-tight md:text-3xl">
       GLP<span class="text-accent">.</span>DEV
@@ -61,6 +65,83 @@ const links = [
       >
         {tr.nav.cta}
       </a>
+      <details class="nav-menu group relative lg:hidden">
+        <summary
+          class="flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-full border border-ink/15 text-ink transition-colors hover:border-ink/40 [&::-webkit-details-marker]:hidden"
+          aria-label="Menu"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            class="h-5 w-5 group-open:hidden"
+          >
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            class="hidden h-5 w-5 group-open:block"
+          >
+            <path d="M6 6l12 12M18 6L6 18"></path>
+          </svg>
+        </summary>
+        <div class="absolute right-0 top-full mt-2 flex w-52 flex-col rounded-2xl border border-ink/10 bg-cream-dark p-2 shadow-xl">
+          {
+            links.map((link) => (
+              <a
+                href={link.href}
+                class="block rounded-xl px-4 py-2.5 text-sm font-medium text-white/80 transition-colors hover:bg-white/5 hover:text-white"
+              >
+                {link.label}
+              </a>
+            ))
+          }
+          <a
+            href="#contact"
+            class="mt-1 block rounded-xl bg-ink px-4 py-2.5 text-center text-sm font-medium text-cream transition-colors hover:bg-accent"
+          >
+            {tr.nav.cta}
+          </a>
+        </div>
+      </details>
     </div>
   </nav>
 </header>
+
+<script>
+  // Header che si "materializza" quando si esce dall'hero
+  const header = document.querySelector<HTMLElement>("[data-header]");
+  const hero = document.querySelector<HTMLElement>("[data-hero]");
+
+  if (header && hero) {
+    const update = () => {
+      header.dataset.scrolled = String(
+        window.scrollY > hero.offsetHeight - 96,
+      );
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+  }
+
+  // Menu mobile: chiude su click link, fuori area o Escape
+  document.querySelectorAll("details.nav-menu").forEach((menu) => {
+    menu.querySelectorAll("a").forEach((a) =>
+      a.addEventListener("click", () => {
+        menu.open = false;
+      }),
+    );
+    document.addEventListener("click", (e) => {
+      if (menu.open && !menu.contains(e.target as Node)) menu.open = false;
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") menu.open = false;
+    });
+  });
+</script>

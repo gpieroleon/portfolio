@@ -12,6 +12,8 @@
   --color-accent: #d90a2c;
   --color-accent-dark: #a80824;
 
+  --ease-brand: cubic-bezier(0.22, 0.61, 0.36, 1);
+
   --animate-marquee: marquee 35s linear infinite;
 
   @keyframes marquee {
@@ -21,8 +23,10 @@
   }
 }
 
-html {
-  scroll-behavior: smooth;
+@layer base {
+  html {
+    overflow-x: clip;
+  }
 }
 
 body {
@@ -57,8 +61,8 @@ body {
   opacity: 0;
   transform: translateY(28px);
   transition:
-    opacity 0.7s ease,
-    transform 0.7s ease;
+    opacity 0.7s var(--ease-brand),
+    transform 0.7s var(--ease-brand);
 }
 
 .reveal.is-visible {
