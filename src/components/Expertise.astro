@@ -1,0 +1,51 @@
+---
+import { t, type Lang } from "../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const tr = t(lang);
+const areas = tr.expertise.areas;
+---
+
+<section id="expertise" class="mx-auto max-w-6xl scroll-mt-24 px-6 py-24 md:py-32">
+  <p class="reveal text-xs font-medium uppercase tracking-widest text-accent">
+    {tr.expertise.eyebrow}
+  </p>
+  <h2 class="reveal mt-3 font-display text-4xl font-bold tracking-tight md:text-6xl">
+    {tr.expertise.heading}
+  </h2>
+
+  <div class="mt-14 grid gap-6 md:grid-cols-3">
+    {
+      areas.map((area, i) => (
+        <article
+          class="reveal group rounded-3xl border border-ink/10 bg-white/[0.04] p-8 transition-all duration-300 hover:-translate-y-1 hover:border-ink/60 hover:shadow-xl hover:shadow-black/40"
+          style={`transition-delay: ${i * 100}ms`}
+        >
+          <div class="flex items-start justify-between">
+            <span class="font-display text-sm font-semibold text-accent">
+              /{area.number}
+            </span>
+          </div>
+          <h3 class="mt-10 font-display text-2xl font-bold tracking-tight">
+            {area.title}
+          </h3>
+          <p class="mt-1 text-sm font-medium uppercase tracking-wide text-ink-soft">
+            {area.subtitle}
+          </p>
+          <p class="mt-4 leading-relaxed text-ink-soft">{area.description}</p>
+          <ul class="mt-6 flex flex-wrap gap-2">
+            {area.tags.map((tag) => (
+              <li class="rounded-full border border-ink/15 px-3 py-1 text-xs font-medium text-ink-soft transition-colors group-hover:border-accent group-hover:text-accent">
+                {tag}
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))
+    }
+  </div>
+</section>

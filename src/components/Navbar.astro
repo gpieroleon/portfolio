@@ -1,0 +1,66 @@
+---
+import { languages, langPath, t, type Lang } from "../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const tr = t(lang);
+
+const links = [
+  { href: "#expertise", label: tr.nav.expertise },
+  { href: "#work", label: tr.nav.projects },
+  { href: "#about", label: tr.nav.about },
+  { href: "#contact", label: tr.nav.contact },
+];
+---
+
+<header class="fixed inset-x-0 top-0 z-50 border-b border-ink/10 bg-cream/80 backdrop-blur-md">
+  <nav class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
+    <a href="#top" class="font-display text-2xl font-bold tracking-tight md:text-3xl">
+      GLP<span class="text-accent">.</span>DEV
+    </a>
+    <ul class="hidden items-center gap-8 lg:flex">
+      {
+        links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="text-sm font-medium text-ink-soft transition-colors hover:text-ink"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <div class="flex items-center gap-3">
+      <div class="flex items-center rounded-full border border-ink/15 p-1 text-xs font-semibold">
+        {
+          (Object.keys(languages) as Lang[]).map((l) =>
+            l === lang ? (
+              <span class="rounded-full bg-ink px-2.5 py-1 text-cream">
+                {l.toUpperCase()}
+              </span>
+            ) : (
+              <a
+                href={langPath(l)}
+                hreflang={l}
+                class="px-2.5 py-1 text-ink-soft transition-colors hover:text-ink"
+              >
+                {l.toUpperCase()}
+              </a>
+            ),
+          )
+        }
+      </div>
+      <a
+        href="#contact"
+        class="hidden rounded-full bg-ink px-5 py-2 text-sm font-medium text-cream transition-colors hover:bg-accent sm:block"
+      >
+        {tr.nav.cta}
+      </a>
+    </div>
+  </nav>
+</header>

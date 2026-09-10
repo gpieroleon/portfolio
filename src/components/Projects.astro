@@ -1,0 +1,146 @@
+---
+import { categories, projects } from "../data/projects";
+import { t, type Lang } from "../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const tr = t(lang);
+
+const categoryLabel = (id: string) =>
+  categories.find((c) => c.id === id)?.label[lang] ?? id;
+---
+
+<section id="work" class="mx-auto max-w-6xl scroll-mt-24 px-6 py-24 md:py-32">
+  <div class="flex flex-wrap items-end justify-between gap-6">
+    <div>
+      <p class="reveal text-xs font-medium uppercase tracking-widest text-accent">
+        {tr.projects.eyebrow}
+      </p>
+      <h2 class="reveal mt-3 font-display text-4xl font-bold tracking-tight md:text-6xl">
+        {tr.projects.heading}
+      </h2>
+    </div>
+    <p class="reveal max-w-sm text-sm leading-relaxed text-ink-soft">
+      {tr.projects.blurb}
+    </p>
+  </div>
+
+  <div class="reveal mt-10 flex flex-wrap gap-3" id="project-filters">
+    {
+      categories.map((cat, i) => (
+        <button
+          data-filter={cat.id}
+          class:list={[
+            "rounded-full border px-5 py-2 text-sm font-medium transition-colors",
+            i === 0
+              ? "border-ink bg-ink text-cream"
+              : "border-ink/15 text-ink-soft hover:border-ink hover:text-ink",
+          ]}
+        >
+          {cat.label[lang]}
+          <span class="ml-1 text-xs opacity-60">
+            {cat.id === "all"
+              ? projects.length
+              : projects.filter((p) => p.category === cat.id).length}
+          </span>
+        </button>
+      ))
+    }
+  </div>
+
+  <div id="project-grid" class="mt-10 grid gap-6 md:grid-cols-2">
+    {
+      projects.map((project, i) => (
+        <article
+          data-category={project.category}
+          class="project-card reveal group flex flex-col overflow-hidden rounded-3xl border border-ink/10 bg-white/[0.04] transition-all duration-300 hover:-translate-y-1 hover:border-ink/60 hover:shadow-xl hover:shadow-black/40"
+          style={`transition-delay: ${(i % 4) * 80}ms`}
+        >
+          <div
+            class:list={[
+              "relative flex h-52 items-center justify-center bg-gradient-to-br",
+              project.gradient,
+            ]}
+          >
+            <span class="font-display text-6xl font-bold text-white/25 transition-transform duration-500 group-hover:scale-110">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <span class="absolute top-4 right-4 rounded-full bg-black/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
+              {project.year}
+            </span>
+          </div>
+          <div class="flex flex-1 flex-col p-7">
+            <div class="flex items-center justify-between gap-4">
+              <h3 class="font-display text-xl font-bold tracking-tight">
+                {project.title}
+              </h3>
+              <span class="shrink-0 text-xs font-medium uppercase tracking-wide text-accent">
+                {categoryLabel(project.category)}
+              </span>
+            </div>
+            <p class="mt-3 flex-1 text-sm leading-relaxed text-ink-soft">
+              {project.description[lang]}
+            </p>
+            <div class="mt-5 flex items-center justify-between">
+              <ul class="flex flex-wrap gap-2">
+                {project.tags.map((tag) => (
+                  <li class="rounded-full bg-cream-dark px-3 py-1 text-xs font-medium text-ink-soft">
+                    {tag}
+                  </li>
+                ))}
+              </ul>
+              <a
+                href="#contact"
+                aria-label={project.title}
+                class="ml-4 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-ink/15 transition-all group-hover:border-accent group-hover:bg-accent group-hover:text-white"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M7 17 17 7" />
+                  <path d="M8 7h9v9" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>(
+    "#project-filters button",
+  );
+  const cards = document.querySelectorAll<HTMLElement>(".project-card");
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const filter = button.dataset.filter;
+
+      buttons.forEach((b) => {
+        b.classList.remove("border-ink", "bg-ink", "text-cream");
+        b.classList.add("border-ink/15", "text-ink-soft");
+      });
+      button.classList.add("border-ink", "bg-ink", "text-cream");
+      button.classList.remove("border-ink/15", "text-ink-soft");
+
+      cards.forEach((card) => {
+        const match = filter === "all" || card.dataset.category === filter;
+        card.classList.toggle("hidden", !match);
+      });
+    });
+  });
+</script>

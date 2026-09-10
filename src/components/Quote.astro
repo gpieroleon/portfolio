@@ -1,0 +1,33 @@
+---
+import { t, type Lang } from "../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const tr = t(lang);
+---
+
+<section class="border-y border-ink/10 bg-cream-dark py-20 text-white md:py-28">
+  <div class="mx-auto max-w-4xl px-6 text-center">
+    <svg
+      class="reveal mx-auto mb-8 text-accent"
+      xmlns="http://www.w3.org/2000/svg"
+      width="40"
+      height="40"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+    >
+      <path
+        d="M9.6 4C5.9 6.3 3.5 9.9 3.5 14.2c0 3.4 2.1 5.8 5 5.8 2.5 0 4.4-1.9 4.4-4.4 0-2.4-1.7-4.2-4-4.2-.4 0-1 .1-1.1.2.3-2.3 2.4-5 4.6-6.3L9.6 4zm10.9 0c-3.7 2.3-6.1 5.9-6.1 10.2 0 3.4 2.1 5.8 5 5.8 2.4 0 4.4-1.9 4.4-4.4 0-2.4-1.8-4.2-4.1-4.2-.4 0-.9.1-1 .2.3-2.3 2.4-5 4.6-6.3L20.5 4z"
+      />
+    </svg>
+    <blockquote class="reveal font-display text-2xl leading-snug font-medium tracking-tight md:text-4xl">
+      "{tr.quote.text}"
+    </blockquote>
+    <p class="reveal mt-6 text-sm uppercase tracking-widest text-white/60">
+      — {tr.quote.author}
+    </p>
+  </div>
+</section>

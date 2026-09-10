@@ -1,0 +1,20 @@
+---
+import { techStack } from "../data/projects";
+
+const items = [...techStack, ...techStack];
+---
+
+<div class="overflow-hidden border-y border-ink/10 bg-cream-dark py-5">
+  <div class="animate-marquee flex w-max items-center gap-10">
+    {
+      items.map((tech) => (
+        <span class="flex items-center gap-10 whitespace-nowrap">
+          <span class="font-display text-lg font-medium uppercase tracking-wide text-ink/70">
+            {tech}
+          </span>
+          <span class="h-1.5 w-1.5 rounded-full bg-accent" />
+        </span>
+      ))
+    }
+  </div>
+</div>
