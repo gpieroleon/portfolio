@@ -9,6 +9,7 @@ export type Project = {
   tags: string[];
   year: string;
   gradient: string;
+  url?: string;
 };
 
 export const categories: { id: ProjectCategory | "all"; label: Record<Lang, string> }[] = [
@@ -26,16 +27,17 @@ export const categories: { id: ProjectCategory | "all"; label: Record<Lang, stri
 
 export const projects: Project[] = [
   {
-    title: "Nebula Dashboard",
+    title: "Lux Hotel Milano",
     description: {
-      en: "Analytics platform with real-time dashboards, interactive charts and report export.",
-      es: "Plataforma de analítica con dashboards en tiempo real, gráficos interactivos y exportación de reportes.",
-      it: "Piattaforma di analytics con dashboard in tempo reale, grafici interattivi ed esportazione dei report.",
+      en: "Website for a 5-star luxury hotel in the heart of Milan: rooms and suites, exclusive experiences, gourmet restaurant, guest reviews, interactive location and booking flow — content in 5 languages.",
+      es: "Sitio web para un hotel de lujo de 5 estrellas en el corazón de Milán: habitaciones y suites, experiencias exclusivas, restaurante gourmet, opiniones de huéspedes, ubicación interactiva y flujo de reserva — contenido en 5 idiomas.",
+      it: "Sito web per un hotel di lusso a 5 stelle nel cuore di Milano: camere e suite, esperienze esclusive, ristorante gourmet, recensioni degli ospiti, mappa interattiva e flusso di prenotazione — contenuto in 5 lingue.",
     },
     category: "web",
-    tags: ["React", "TypeScript", "Tailwind"],
-    year: "2025",
-    gradient: "from-orange-500 to-rose-500",
+    tags: ["HTML5", "CSS3", "JavaScript", "i18n", "Vercel"],
+    year: "2026",
+    gradient: "from-yellow-500 to-amber-700",
+    url: "https://lux-hotel-milano.vercel.app",
   },
   {
     title: "Orbita E-commerce",
