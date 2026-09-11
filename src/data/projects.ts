@@ -10,6 +10,7 @@ export type Project = {
   year: string;
   gradient: string;
   url?: string;
+  image?: string;
 };
 
 export const categories: { id: ProjectCategory | "all"; label: Record<Lang, string> }[] = [
@@ -38,6 +39,7 @@ export const projects: Project[] = [
     year: "2026",
     gradient: "from-yellow-500 to-amber-700",
     url: "https://lux-hotel-milano.vercel.app",
+    image: "/project-lux-hotel.jpg",
   },
   {
     title: "Orbita E-commerce",
