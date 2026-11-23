@@ -9,6 +9,15 @@ interface Props {
 const { lang } = Astro.props;
 const tr = t(lang);
 
+const linkProps = (url?: string) =>
+  url
+    ? { href: url, target: "_blank", rel: "noopener" }
+    : { href: "#contact" };
+
+const visibleCategories = categories.filter(
+  (c) => c.id === "all" || projects.some((p) => p.category === c.id),
+);
+
 const categoryLabel = (id: string) =>
   categories.find((c) => c.id === id)?.label[lang] ?? id;
 ---
@@ -28,7 +37,7 @@ const categoryLabel = (id: string) =>
 
   <div class="reveal mt-10 flex flex-wrap gap-3" id="project-filters">
     {
-      categories.map((cat, i) => (
+      visibleCategories.map((cat, i) => (
         <button
           data-filter={cat.id}
           class:list={[
@@ -57,7 +66,9 @@ const categoryLabel = (id: string) =>
           class="project-card reveal group flex flex-col overflow-hidden rounded-3xl border border-ink/10 bg-white/[0.04] transition-all duration-300 hover:-translate-y-1 hover:border-ink/60 hover:shadow-xl hover:shadow-black/40"
           style={`transition-delay: ${(i % 4) * 80}ms`}
         >
-          <div
+          <a
+            {...linkProps(project.url)}
+            aria-label={project.title}
             class:list={[
               "relative flex h-52 items-center justify-center overflow-hidden bg-gradient-to-br",
               project.gradient,
@@ -77,11 +88,16 @@ const categoryLabel = (id: string) =>
             <span class="absolute top-4 right-4 rounded-full bg-black/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
               {project.year}
             </span>
-          </div>
+          </a>
           <div class="flex flex-1 flex-col p-7">
             <div class="flex items-center justify-between gap-4">
               <h3 class="font-display text-xl font-bold tracking-tight">
-                {project.title}
+                <a
+                  {...linkProps(project.url)}
+                  class="transition-colors hover:text-accent"
+                >
+                  {project.title}
+                </a>
               </h3>
               <span class="shrink-0 text-xs font-medium uppercase tracking-wide text-accent">
                 {categoryLabel(project.category)}
@@ -99,8 +115,7 @@ const categoryLabel = (id: string) =>
                 ))}
               </ul>
               <a
-                href={project.url ?? "#contact"}
-                {...project.url ? { target: "_blank", rel: "noopener" } : {}}
+                {...linkProps(project.url)}
                 aria-label={project.title}
                 class="ml-4 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-ink/15 transition-all group-hover:border-accent group-hover:bg-accent group-hover:text-white"
               >
