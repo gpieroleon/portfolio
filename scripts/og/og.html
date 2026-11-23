@@ -1,0 +1,60 @@
+<!doctype html>
+<!-- Plantilla de la imagen para compartir (1200x630). Generar con scripts/og/generate.sh -->
+<html>
+<head>
+<meta charset="utf-8" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+  * { margin: 0; box-sizing: border-box; }
+  body { width: 1200px; height: 630px; overflow: hidden; background: #1a191d; color: #f5f4f6; font-family: Inter, sans-serif; position: relative; }
+  .bg { position: absolute; inset: 0; background: url("../../public/hero-bg.jpg") center/cover; transform: scale(1.1); }
+  .shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,.82), rgba(0,0,0,.55) 55%, rgba(0,0,0,.35)), linear-gradient(180deg, rgba(0,0,0,.25), transparent 40%, rgba(26,25,29,.9)); }
+  .wrap { position: absolute; inset: 0; padding: 56px 72px; display: flex; flex-direction: column; justify-content: space-between; }
+  .top { display: flex; justify-content: space-between; align-items: center; }
+  .logo { font: 700 30px "Space Grotesk"; letter-spacing: -.02em; }
+  .logo i { color: #d90a2c; font-style: normal; }
+  .badge { display: flex; align-items: center; gap: 10px; border: 1px solid rgba(255,255,255,.25); background: rgba(0,0,0,.3); border-radius: 99px; padding: 9px 20px; font-size: 15px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.85); }
+  .badge b { width: 9px; height: 9px; border-radius: 50%; background: #d90a2c; box-shadow: 0 0 0 5px rgba(217,10,44,.25); }
+  .mid { display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+  h1 { font: 700 104px/0.95 "Space Grotesk"; letter-spacing: -.035em; color: #fff; }
+  h1 span { color: transparent; -webkit-text-stroke: 2px #f5f4f6; }
+  .role { margin-top: 26px; font-size: 30px; font-weight: 600; color: #fff; }
+  .role em { font-style: normal; font-weight: 400; color: rgba(255,255,255,.7); }
+  .photo { flex: none; width: 210px; height: 210px; border-radius: 50%; background: url("../../public/photo-hero.jpg") center 22%/cover; border: 4px solid #1a191d; outline: 3px solid #d90a2c; box-shadow: 0 20px 50px rgba(0,0,0,.6); }
+  .bottom { display: flex; justify-content: space-between; align-items: center; }
+  .chips { display: flex; gap: 10px; }
+  .chips span { background: rgba(35,34,38,.85); border: 1px solid #333237; border-radius: 99px; padding: 8px 18px; font-size: 18px; font-weight: 500; color: #c9c8cd; }
+  .url { font-size: 20px; font-weight: 500; color: rgba(255,255,255,.75); }
+  .url i { color: #d90a2c; font-style: normal; }
+</style>
+</head>
+<body>
+  <div class="bg"></div><div class="shade"></div>
+  <div class="wrap">
+    <div class="top">
+      <div class="logo">GLP<i>.</i>DEV</div>
+      <div class="badge"><b></b><span id="badge"></span></div>
+    </div>
+    <div class="mid">
+      <div>
+        <h1>Gianpiero<br /><span>Leon Palma</span></h1>
+        <p class="role"><span id="role"></span> <em id="tag"></em></p>
+      </div>
+      <div class="photo"></div>
+    </div>
+    <div class="bottom">
+      <div class="chips"><span>Astro</span><span>React</span><span>Node.js</span><span>TypeScript</span><span>Docker</span></div>
+      <div class="url">portfolio-gpiero.vercel.app <i>↗</i></div>
+    </div>
+  </div>
+  <script>
+    const T = {
+      en: ["Available for new projects", "Full Stack Developer", "· Websites & web apps"],
+      es: ["Disponible para nuevos proyectos", "Desarrollador Full Stack", "· Sitios y aplicaciones web"],
+      it: ["Disponibile per nuovi progetti", "Sviluppatore Full Stack", "· Siti e applicazioni web"],
+    };
+    const [b, r, g] = T[new URLSearchParams(location.search).get("lang")] ?? T.en;
+    badge.textContent = b; role.textContent = r; tag.textContent = g;
+  </script>
+</body>
+</html>
